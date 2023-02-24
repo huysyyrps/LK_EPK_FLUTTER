@@ -20,7 +20,7 @@ class _VideoWindowWidgetState extends State<VideoWindowWidget> {
   Future<void> initWebState() async {
     try {
       await _webViewController.initialize();
-      await _webViewController.loadUrl("Http://192.168.43.251:8080");
+      await _webViewController.loadUrl(Point.BASEURL);
       _webViewController.webMessage.listen((event) {});
       setState(() {});
     } on Exception catch (e) {
@@ -30,8 +30,10 @@ class _VideoWindowWidgetState extends State<VideoWindowWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Webview(_webViewController),
+    return SizedBox(
+      child: Webview(
+        _webViewController,
+      ),
     );
   }
 }

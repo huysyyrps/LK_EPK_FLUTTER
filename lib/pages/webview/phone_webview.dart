@@ -16,7 +16,9 @@ class _VideoPhoneWidgetState extends State<VideoPhoneWidget> {
     ..loadRequest(Uri.parse(Point.BASEURL));
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      width: 300,
+      height: 300,
       child: WebViewWidget(controller: controller),
     );
   }
