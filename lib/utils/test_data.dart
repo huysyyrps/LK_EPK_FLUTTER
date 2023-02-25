@@ -4,11 +4,11 @@ import 'package:fl_chart/fl_chart.dart';
 
 class TestData {
   List<int> list = [
-    1,
+    11,
     4,
-    5,
-    3,
-    5,
+    -5,
+    13,
+    -5,
     6,
     3,
     2,
@@ -309,7 +309,7 @@ class TestData {
   List<FlSpot> setData() {
     List<FlSpot> dataList = [];
     for (int i = 0; i < list.length; i++) {
-      dataList.add(FlSpot(i.toDouble(), list[i].toDouble()));
+      dataList.add(FlSpot(i.toDouble(), list[i].toDouble() + 10));
     }
     return dataList;
   }

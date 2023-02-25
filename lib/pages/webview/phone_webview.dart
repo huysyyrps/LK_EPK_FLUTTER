@@ -17,8 +17,7 @@ class _VideoPhoneWidgetState extends State<VideoPhoneWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 300,
-      height: 300,
+      // height: MediaQuery.of(context).size.height / 11 * 5,
       child: WebViewWidget(controller: controller),
     );
   }
