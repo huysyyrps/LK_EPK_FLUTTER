@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lk_epk/utils/test_data.dart';
+import 'package:lk_epk/utils/base_button.dart';
+import 'package:lk_epk/utils/base_text.dart';
 
 class LineCharts extends StatefulWidget {
   final List<FlSpot> listData;
@@ -12,86 +12,131 @@ class LineCharts extends StatefulWidget {
   State<LineCharts> createState() => _LineChartsState();
 }
 
+void btnStopSelect() {
+  print("停止");
+}
+
+void btnSaveSelect() {
+  print("存储");
+}
+
 class _LineChartsState extends State<LineCharts> {
   @override
   Widget build(BuildContext context) {
-    const cutOffYValue = 0.0;
-    const yearTextStyle = TextStyle(fontSize: 12, color: Colors.black);
     return SizedBox(
-      child: LineChart(
-        LineChartData(
-          minY: 0,
-          maxY: 30,
-          clipData: FlClipData.all(),
-          lineTouchData: LineTouchData(enabled: false),
-          lineBarsData: [
-            LineChartBarData(
-              // spots: TestData().setData(),
-              spots: widget.listData,
-              //弯曲
-              isCurved: true,
-              //曲线颜色
-              color: Colors.yellow[800],
-              //曲线宽度
-              barWidth: 1,
-              //是否显示节点
-              dotData: FlDotData(
-                show: false,
+      child: Stack(
+        alignment: Alignment.center, //指定未定位或部分定位widget的对齐方式
+        children: <Widget>[
+          LineChart(
+            LineChartData(
+              minY: 0,
+              maxY: 30,
+              clipData: FlClipData.all(),
+              lineTouchData: LineTouchData(enabled: false),
+              lineBarsData: [
+                LineChartBarData(
+                  // spots: TestData().setData(),
+                  spots: widget.listData,
+                  //弯曲
+                  isCurved: true,
+                  //曲线颜色
+                  color: Colors.yellow[800],
+                  //曲线宽度
+                  barWidth: 1,
+                  //是否显示节点
+                  dotData: FlDotData(
+                    show: false,
+                  ),
+                ),
+              ],
+              // //网格
+              // gridData: FlGridData(
+              //   show: true,
+              //   drawHorizontalLine: true,
+              //   drawVerticalLine: true,
+              //   getDrawingHorizontalLine: (value) {
+              //     return FlLine(
+              //       color: const Color(0xff37434d),
+              //       strokeWidth: 1,
+              //     );
+              //   },
+              //   getDrawingVerticalLine: (value) {
+              //     return FlLine(
+              //       color: const Color(0xff37434d),
+              //       strokeWidth: 1,
+              //     );
+              //   },
+              // ),
+              // titlesData: FlTitlesData(
+              //   show: true,
+              //   bottomTitles: AxisTitles(
+              //     axisNameSize: 12,
+              //   ),
+              //   leftTitles: AxisTitles(
+              //     axisNameSize: 12,
+              //   ),
+              //   rightTitles: AxisTitles(
+              //     axisNameSize: 12,
+              //   ),
+              // ),
+              //边框线设置
+              borderData: FlBorderData(
+                  show: true,
+                  border: Border.all(color: Colors.yellow[800]!, width: 1)),
+              titlesData: FlTitlesData(
+                bottomTitles: AxisTitles(
+                  drawBehindEverything: false,
+                  axisNameWidget: bottonWeidget(),
+                ),
+                leftTitles: AxisTitles(
+                  axisNameWidget: leftWeidget(),
+                ),
+                topTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                  showTitles: false,
+                )),
+                rightTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                  showTitles: false,
+                )),
               ),
             ),
-          ],
-          // //网格
-          // gridData: FlGridData(
-          //   show: true,
-          //   drawHorizontalLine: true,
-          //   drawVerticalLine: true,
-          //   getDrawingHorizontalLine: (value) {
-          //     return FlLine(
-          //       color: const Color(0xff37434d),
-          //       strokeWidth: 1,
-          //     );
-          //   },
-          //   getDrawingVerticalLine: (value) {
-          //     return FlLine(
-          //       color: const Color(0xff37434d),
-          //       strokeWidth: 1,
-          //     );
-          //   },
-          // ),
-          // titlesData: FlTitlesData(
-          //   show: true,
-          //   bottomTitles: AxisTitles(
-          //     axisNameSize: 12,
-          //   ),
-          //   leftTitles: AxisTitles(
-          //     axisNameSize: 12,
-          //   ),
-          //   rightTitles: AxisTitles(
-          //     axisNameSize: 12,
-          //   ),
-          // ),
-          //边框线设置
-          borderData: FlBorderData(
-              show: true,
-              border: Border.all(color: Colors.yellow[800]!, width: 1)),
-          titlesData: FlTitlesData(
-            bottomTitles: AxisTitles(
-              drawBehindEverything: false,
-              axisNameWidget: bottonWeidget(),
-            ),
-            leftTitles: AxisTitles(
-              axisNameWidget: leftWeidget(),
-            ),
-            topTitles: AxisTitles(
-                sideTitles: SideTitles(
-              showTitles: false,
-            )),
-            rightTitles: AxisTitles(
-                sideTitles: SideTitles(
-              showTitles: false,
-            )),
           ),
-        ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Row(
+              children: [
+                Container(
+                  height: 45,
+                  width: 70,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.yellow[800]!, width: 2),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: const Text(
+                    "data",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, color: Colors.red),
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Column(
+                  children: const [
+                    BaseButton(text: "停止", bunSlelct: btnStopSelect),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    BaseButton(text: "存储", bunSlelct: btnSaveSelect),
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -104,15 +149,15 @@ Widget bottonWeidget() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [
-        Text("0", style: TextStyle(fontSize: 10)),
-        Text("10", style: TextStyle(fontSize: 10)),
-        Text("20", style: TextStyle(fontSize: 10)),
-        Text("30", style: TextStyle(fontSize: 10)),
-        Text("40", style: TextStyle(fontSize: 10)),
-        Text("50", style: TextStyle(fontSize: 10)),
-        Text("60", style: TextStyle(fontSize: 10)),
-        Text("70", style: TextStyle(fontSize: 10)),
-        Text("80", style: TextStyle(fontSize: 10)),
+        BaseText(data: "0"),
+        BaseText(data: "10"),
+        BaseText(data: "20"),
+        BaseText(data: "30"),
+        BaseText(data: "40"),
+        BaseText(data: "50"),
+        BaseText(data: "60"),
+        BaseText(data: "70"),
+        BaseText(data: "80"),
       ],
     ),
   );
@@ -125,12 +170,12 @@ Widget leftWeidget() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [
-        Text("0", style: TextStyle(fontSize: 10)),
-        Text("20", style: TextStyle(fontSize: 10)),
-        Text("40", style: TextStyle(fontSize: 10)),
-        Text("60", style: TextStyle(fontSize: 10)),
-        Text("80", style: TextStyle(fontSize: 10)),
-        Text("100", style: TextStyle(fontSize: 10)),
+        BaseText(data: "0"),
+        BaseText(data: "20"),
+        BaseText(data: "40"),
+        BaseText(data: "60"),
+        BaseText(data: "80"),
+        BaseText(data: "100"),
       ],
     ),
   );
