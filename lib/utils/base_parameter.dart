@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BaseOption extends StatelessWidget {
+class BaseParameter extends StatelessWidget {
   final String title;
   final String data;
-  final Function btnSelect;
 
-  const BaseOption(
-      {super.key,
-      required this.title,
-      required this.data,
-      required this.btnSelect});
+  const BaseParameter({
+    super.key,
+    required this.title,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class BaseOption extends StatelessWidget {
                 style: const TextStyle(fontSize: 12, color: Colors.white),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+                padding: const EdgeInsets.fromLTRB(50, 4, 50, 4),
                 decoration: BoxDecoration(
                     color: Colors.yellow[800],
                     borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -39,7 +38,7 @@ class BaseOption extends StatelessWidget {
           ),
         ),
         onTap: () {
-          btnSelect();
+          // btnSelect();
         },
       ),
     );

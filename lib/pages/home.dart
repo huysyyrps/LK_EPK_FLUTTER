@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:lk_epk/pages/chart/line_chart.dart';
 import 'package:lk_epk/pages/webview/phone_webview.dart';
 import 'package:lk_epk/pages/webview/window_webview.dart';
+import 'package:lk_epk/utils/base_devices_parame.dart';
+import 'package:lk_epk/utils/base_direction.dart';
+import 'package:lk_epk/utils/base_function_button.dart';
+import 'package:lk_epk/utils/base_heard.dart';
 import 'package:lk_epk/utils/base_option.dart';
 import 'package:lk_epk/utils/test_data.dart';
 
@@ -45,93 +49,73 @@ class _HomePageState extends State<HomePage> {
     // return listData;
   }
 
-  text() {
-    print("1");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey[800],
       body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
               flex: 8,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: deviceTag ? VideoPhoneWidget() : VideoWindowWidget(),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: LineCharts(listData: listData),
-                  ),
-                ],
+              child: Container(
+                color: Colors.black87,
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child:
+                          deviceTag ? VideoPhoneWidget() : VideoWindowWidget(),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: LineCharts(listData: listData),
+                    ),
+                  ],
+                ),
               )),
           Container(
-            color: Colors.yellow[800],
+            // color: Colors.yellow[800],
             width: 1,
             margin: const EdgeInsets.fromLTRB(2, 4, 2, 0),
           ),
           Expanded(
               flex: 4,
-              child: Container(
-                color: Colors.black12,
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2,
+              child: Column(
+                children: [
+                  Container(
+                    height: 4,
+                    color: Colors.black87,
                   ),
-                  children: [
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                    BaseOption(
-                      title: "闸门",
-                      data: "自动",
-                      btnSelect: text,
-                    ),
-                  ],
-                ),
+                  const BaseHeard(
+                    title: "功能按键",
+                  ),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  const BaseFunctionButton(),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  const BaseHeard(
+                    title: "设备参数",
+                  ),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  const BaseDevicesParme(
+                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
+                  const BaseDevicesParme(
+                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
+                  const BaseDevicesParme(
+                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  const BaseHeard(
+                    title: "方向控制",
+                  ),
+                  BaseDirection(),
+                ],
               )),
         ],
       ),
