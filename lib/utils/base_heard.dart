@@ -17,23 +17,29 @@ class _BaseHeardState extends State<BaseHeard> {
       height: 30,
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             color: Colors.red,
             width: 4,
-            height: 15,
+            height: 13,
             margin: const EdgeInsets.fromLTRB(1, 0, 5, 0),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              widget.title,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            ),
+          // Expanded(
+          //    flex: 1,
+          //   child:
+          Text(
+            widget.title,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
           ),
+          Container(
+            color: Colors.red,
+            width: 4,
+            height: 13,
+            margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          ),
+          // ),
         ],
       ),
     );

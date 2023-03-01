@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lk_epk/fun/base_dialog.dart';
 import 'package:lk_epk/utils/base_option.dart';
 
 class BaseFunctionButton extends StatefulWidget {
@@ -13,6 +14,8 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
     print("1");
   }
 
+  bool _switchTag = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,10 +27,34 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
             children: [
               Expanded(
                 flex: 1,
-                child: BaseOption(
-                  title: "自动增益",
-                  data: "自动",
-                  btnSelect: text,
+                child: Container(
+                  padding: const EdgeInsets.all(0),
+                  color: Colors.black87,
+                  child: Column(
+                    children: [
+                      const Text(
+                        "自动增益",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                      Container(
+                        height: 34,
+                        child: Switch(
+                          value: _switchTag,
+                          activeColor: Colors.yellow[800],
+                          activeTrackColor: Colors.yellow[800],
+                          inactiveThumbColor: Colors.yellow[800],
+                          inactiveTrackColor: Colors.grey,
+                          onChanged: (value) {
+                            setState(() {
+                              _switchTag = value;
+                            });
+                          },
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(

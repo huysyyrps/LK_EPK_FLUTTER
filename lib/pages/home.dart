@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
               flex: 4,
-              child: Column(
+              child: ListView(
                 children: [
                   Container(
                     height: 4,
@@ -115,10 +115,57 @@ class _HomePageState extends State<HomePage> {
                     title: "方向控制",
                   ),
                   BaseDirection(),
+                  FloatingActionButton(
+                    child: Icon(Icons.format_list_numbered),
+                    onPressed: _openSimpleDialog,
+                  ),
                 ],
               )),
         ],
       ),
+    );
+  }
+
+  List<String> stringList = [
+    "1",
+    "2",
+    "3",
+  ];
+
+  Future _openSimpleDialog() async {
+    final option = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text('SimpleDialog'),
+            children: <Widget>[
+              Column(
+                children: stringList
+                    .map(
+                      (e) => SimpleDialogOption(
+                        child: Text(e),
+                        onPressed: () {},
+                      ),
+                    )
+                    .toList(),
+                // ],
+              )
+            ],
+          );
+        });
+  }
+
+  Widget _cellForRow(BuildContext context, int index) {
+    return Column(
+      children: <Widget>[
+        SimpleDialogOption(
+          child: Text(stringList[index]),
+          onPressed: () {
+            print(stringList[index]);
+          },
+        ),
+        // Container(height: 20,),
+      ],
     );
   }
 }
