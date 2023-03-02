@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lk_epk/fun/base_dialog.dart';
+import 'package:lk_epk/data/base_data.dart';
 import 'package:lk_epk/utils/base_option.dart';
 
 class BaseFunctionButton extends StatefulWidget {
-  const BaseFunctionButton({super.key});
+  final Function selectBack;
+
+  const BaseFunctionButton({super.key, required this.selectBack});
 
   @override
   State<BaseFunctionButton> createState() => _BaseFunctionButtonState();
@@ -15,6 +17,12 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
   }
 
   bool _switchTag = false;
+  String gate = "自动";
+  String leave = "2"; //平均等级
+  String materialType = "碳钢"; //材料类型
+  String waveType = "射频波"; //检波方式
+  String rangeAdd = "1X"; //范围扩展
+  String workTemp = "25"; //工作温度
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +71,11 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: BaseOption(
-                  title: "闸门",
-                  data: "自动",
-                  btnSelect: text,
-                ),
+                    title: "闸门",
+                    data: gate,
+                    btnSelect: () {
+                      _openSimpleDialog("GATE");
+                    }),
               ),
               const SizedBox(
                 width: 1,
@@ -74,10 +83,11 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: BaseOption(
-                  title: "平均等级",
-                  data: "自动",
-                  btnSelect: text,
-                ),
+                    title: "平均等级",
+                    data: leave,
+                    btnSelect: () {
+                      _openSimpleDialog("LEAVE");
+                    }),
               ),
             ],
           ),
@@ -93,8 +103,10 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
                 flex: 1,
                 child: BaseOption(
                   title: "材料类型",
-                  data: "自动",
-                  btnSelect: text,
+                  data: materialType,
+                  btnSelect: () {
+                    _openSimpleDialog("MATERIALTYPE");
+                  },
                 ),
               ),
               const SizedBox(
@@ -164,5 +176,95 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
         ),
       ],
     );
+  }
+
+  _openSimpleDialog(String tag) async {
+    List<String> dataList = [];
+    if (tag == "GATE") {
+      dataList = BaseData().gateList;
+    } else if (tag == "LEAVE") {
+      dataList = BaseData().leaveList;
+    } else if (tag == "MATERIALTYPE") {
+      dataList = BaseData().leaveList;
+    }
+    final option = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            alignment: Alignment.center,
+            backgroundColor: Colors.grey[800],
+            titlePadding: EdgeInsets.all(0),
+            title: Container(
+              height: 30,
+              color: Colors.grey[850],
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 20,
+                          width: 20,
+                          margin: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+                          child: const Image(
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
+                            image: AssetImage("static/image/ic_logo.jpg"),
+                          ),
+                        ),
+                        Text(
+                          BaseData().title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            children: <Widget>[
+              Column(
+                children: dataList
+                    .map(
+                      (e) => SimpleDialogOption(
+                        padding: EdgeInsets.all(0),
+                        child: Ink(
+                          //使用Ink包裹，在这里设置颜色
+                          child: InkWell(
+                            splashColor: Colors.red,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 90, vertical: 15),
+                              child: Text(
+                                e,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                if (tag == "GATE") {
+                                  gate = e;
+                                } else if (tag == "LEAVE") {
+                                  leave = e;
+                                }
+                              });
+                              Navigator.pop(context, 1);
+                              widget.selectBack(tag, e);
+                            },
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              )
+            ],
+          );
+        });
   }
 }

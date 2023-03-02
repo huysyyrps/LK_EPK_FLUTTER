@@ -36,6 +36,7 @@ dependencies:
   webview_flutter: ^4.0.2
   webview_windows: ^0.2.2
   fl_chart: ^0.60.0
+  path_provider: ^2.0.13
 
 
 
@@ -73,6 +74,7 @@ flutter:
     - static/banner/banner3.jpg
     - static/banner/banner4.jpg
     - static/banner/banner5.jpg
+    - static/image/ic_logo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -29,11 +29,15 @@ class BaseOption extends StatelessWidget {
                 style: const TextStyle(fontSize: 12, color: Colors.white),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+                width: 80,
+                padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
                 decoration: BoxDecoration(
                     color: Colors.yellow[800],
                     borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Text(data),
+                child: Text(
+                  data,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),
