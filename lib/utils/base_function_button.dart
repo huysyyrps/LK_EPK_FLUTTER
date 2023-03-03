@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lk_epk/data/base_data.dart';
+import 'package:lk_epk/file/path_provider.dart';
+import 'package:lk_epk/utils/base_dialogtitle.dart';
 import 'package:lk_epk/utils/base_option.dart';
 
 class BaseFunctionButton extends StatefulWidget {
@@ -12,10 +15,6 @@ class BaseFunctionButton extends StatefulWidget {
 }
 
 class _BaseFunctionButtonState extends State<BaseFunctionButton> {
-  text() {
-    print("1");
-  }
-
   bool _switchTag = false;
   String gate = "自动";
   String leave = "2"; //平均等级
@@ -23,6 +22,7 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
   String waveType = "射频波"; //检波方式
   String rangeAdd = "1X"; //范围扩展
   String workTemp = "25"; //工作温度
+  String audioSpeed = "3254.0"; //声速
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +115,9 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: BaseOption(
-                  title: "检波方式",
-                  data: "自动",
-                  btnSelect: text,
+                  title: "声速（m/s）",
+                  data: audioSpeed,
+                  btnSelect: () {},
                 ),
               ),
               const SizedBox(
@@ -127,8 +127,10 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
                 flex: 1,
                 child: BaseOption(
                   title: "范围扩展",
-                  data: "自动",
-                  btnSelect: text,
+                  data: rangeAdd,
+                  btnSelect: () {
+                    _openSimpleDialog("RANGEADD");
+                  },
                 ),
               ),
             ],
@@ -144,9 +146,11 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: BaseOption(
-                  title: "工作温度",
-                  data: "自动",
-                  btnSelect: text,
+                  title: "检波方式",
+                  data: waveType,
+                  btnSelect: () {
+                    _openSimpleDialog("WAVETYPE");
+                  },
                 ),
               ),
               const SizedBox(
@@ -155,9 +159,11 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: BaseOption(
-                  title: "声速（m/s）",
-                  data: "自动",
-                  btnSelect: text,
+                  title: "工作温度",
+                  data: workTemp,
+                  btnSelect: () {
+                    selectTemp(workTemp);
+                  },
                 ),
               ),
               const SizedBox(
@@ -168,7 +174,9 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
                 child: BaseOption(
                   title: "参数初始",
                   data: "自动",
-                  btnSelect: text,
+                  btnSelect: () {
+                    print("参数初始");
+                  },
                 ),
               ),
             ],
@@ -178,6 +186,76 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
     );
   }
 
+  selectTemp(String tag) {
+    TextEditingController tempCon = TextEditingController();
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            alignment: Alignment.center,
+            backgroundColor: Colors.grey[800],
+            titlePadding: const EdgeInsets.all(0),
+            title: const BaseDialogTitle(),
+            children: <Widget>[
+              Column(
+                children: [
+                  Container(
+                    height: 120,
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: TextField(
+                      controller: tempCon,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                          color: Colors.yellow[800], letterSpacing: 1.5),
+                      decoration: InputDecoration(
+                          hintText: "请输入工作温度",
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 0),
+                          hintStyle: TextStyle(
+                            fontSize: 13,
+                            height: 1,
+                            color: Colors.yellow[800],
+                          )),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: 30,
+                        margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, 1);
+                          },
+                          child: const Text("取消"),
+                        ),
+                      ),
+                      Container(
+                          height: 30,
+                          margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                workTemp = tempCon.text;
+                                Navigator.pop(context, 1);
+                                widget.selectBack(tag, tempCon.text);
+                              },
+                              child: const Text("确定")))
+                    ],
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
   _openSimpleDialog(String tag) async {
     List<String> dataList = [];
     if (tag == "GATE") {
@@ -185,48 +263,22 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
     } else if (tag == "LEAVE") {
       dataList = BaseData().leaveList;
     } else if (tag == "MATERIALTYPE") {
-      dataList = BaseData().leaveList;
+      String saveMaterialType = await BasePathProvider().readString();
+      dataList = saveMaterialType.split("++");
+    } else if (tag == "RANGEADD") {
+      dataList = BaseData().rangeAddList;
+    } else if (tag == "WAVETYPE") {
+      dataList = BaseData().waveTypeList;
     }
+
     final option = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
             alignment: Alignment.center,
             backgroundColor: Colors.grey[800],
-            titlePadding: EdgeInsets.all(0),
-            title: Container(
-              height: 30,
-              color: Colors.grey[850],
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 20,
-                          width: 20,
-                          margin: const EdgeInsets.fromLTRB(15, 0, 5, 0),
-                          child: const Image(
-                            alignment: Alignment.center,
-                            fit: BoxFit.cover,
-                            image: AssetImage("static/image/ic_logo.jpg"),
-                          ),
-                        ),
-                        Text(
-                          BaseData().title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            titlePadding: const EdgeInsets.all(0),
+            title: const BaseDialogTitle(),
             children: <Widget>[
               Column(
                 children: dataList
@@ -252,6 +304,13 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
                                   gate = e;
                                 } else if (tag == "LEAVE") {
                                   leave = e;
+                                } else if (tag == "MATERIALTYPE") {
+                                  materialType = e.split(" ")[0];
+                                  audioSpeed = e.split(" ")[1];
+                                } else if (tag == "RANGEADD") {
+                                  rangeAdd = e;
+                                } else if (tag == "WAVETYPE") {
+                                  waveType = e;
                                 }
                               });
                               Navigator.pop(context, 1);

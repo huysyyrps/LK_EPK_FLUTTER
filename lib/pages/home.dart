@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:lk_epk/file/path_provider.dart';
 import 'package:lk_epk/pages/chart/line_chart.dart';
 import 'package:lk_epk/pages/webview/phone_webview.dart';
 import 'package:lk_epk/pages/webview/window_webview.dart';
@@ -26,12 +27,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    setData();
+    //模拟数据
+    setTestData();
   }
 
   List<FlSpot> listData = [];
   var someCondition = false;
-  setData() {
+  setTestData() {
     Timer.periodic(Duration(milliseconds: 200), (timer) {
       List<FlSpot> listData1 = [];
       var rng = Random();
@@ -64,7 +66,8 @@ class _HomePageState extends State<HomePage> {
       } else if (tag == "LEAVE") {
         leave = backData;
       } else if (tag == "MATERIALTYPE") {
-        materialType = backData;
+        materialType = backData.split(" ")[0];
+        audioSpeed = backData.split(" ")[1];
       } else if (tag == "WAVETYPE") {
         waveType = backData;
       } else if (tag == "RANGEADD") {
