@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lk_epk/data/base_data.dart';
 import 'package:lk_epk/file/path_provider.dart';
+import 'package:lk_epk/pages/home.dart';
 import 'package:lk_epk/utils/base_dialogtitle.dart';
 import 'package:lk_epk/utils/base_option.dart';
 
@@ -55,6 +56,7 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
                           onChanged: (value) {
                             setState(() {
                               _switchTag = value;
+                              // HomePage().test();
                             });
                           },
                           materialTapTargetSize:

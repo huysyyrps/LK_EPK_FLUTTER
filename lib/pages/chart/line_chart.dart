@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lk_epk/utils/base_button.dart';
 import 'package:lk_epk/utils/base_text.dart';
 
@@ -7,6 +8,8 @@ class LineCharts extends StatefulWidget {
   final List<FlSpot> listData;
 
   const LineCharts({super.key, required this.listData});
+
+  // const LineCharts({super.key, required this.listData});
 
   @override
   State<LineCharts> createState() => _LineChartsState();
@@ -21,6 +24,7 @@ void btnSaveSelect() {
 }
 
 class _LineChartsState extends State<LineCharts> {
+  double rangeAddNum = 80;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -107,6 +111,34 @@ class _LineChartsState extends State<LineCharts> {
             right: 10,
             child: Row(
               children: [
+                Visibility(
+                    visible: false,
+                    child: Row(
+                      children: [
+                        Container(
+                          width:
+                              MediaQuery.of(context).size.width / 12 * 8 - 200,
+                          child: NeumorphicSlider(
+                            min: 0,
+                            max: 100,
+                            height: 8,
+                            value: rangeAddNum,
+                            onChanged: (value) {
+                              setState(() {
+                                rangeAddNum = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Text(
+                          "${rangeAddNum.floor()}",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    )),
+                const SizedBox(
+                  width: 30,
+                ),
                 Container(
                   height: 45,
                   width: 70,
