@@ -4,6 +4,9 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:lk_epk/file/path_provider.dart';
+import 'package:lk_epk/model/bool_notification.dart';
+import 'package:lk_epk/model/switchtag_context.dart';
+import 'package:lk_epk/model/switchtag_model.dart';
 import 'package:lk_epk/pages/chart/line_chart.dart';
 import 'package:lk_epk/pages/webview/phone_webview.dart';
 import 'package:lk_epk/pages/webview/window_webview.dart';
@@ -24,11 +27,26 @@ class HomePage extends StatefulWidget {
 bool deviceTag = Platform.isAndroid ? true : false;
 
 class _HomePageState extends State<HomePage> {
+  //switch状态
+  bool switchTag = false;
+  late SwitchTagModel switchTagModel;
+  _initData() {
+    switchTagModel = SwitchTagModel(switchTag);
+  }
+
   @override
   void initState() {
     super.initState();
     //模拟数据
     setTestData();
+    _initData();
+  }
+
+  //点击监听
+  _switchclient() {
+    setState(() {
+      switchTagModel = SwitchTagModel(true);
+    });
   }
 
   List<FlSpot> listData = [];
@@ -80,76 +98,95 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("2");
-    return Scaffold(
-      backgroundColor: Colors.grey[800],
-      body: Row(
-        children: [
-          Expanded(
-              flex: 8,
-              child: Container(
-                color: Colors.black87,
-                child: Column(
+    return NotificationListener<BoolNotification>(
+      onNotification: (notification) {
+        switchTag = notification.switchClient;
+        print(notification.switchClient);
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[800],
+        body: Row(
+          children: [
+            Expanded(
+                flex: 8,
+                child: Container(
+                  color: Colors.black87,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: deviceTag
+                            ? const VideoPhoneWidget()
+                            : const VideoWindowWidget(),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: LineCharts(
+                          listData: listData,
+                          switchTag: switchTag,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+            Container(
+              // color: Colors.yellow[800],
+              width: 1,
+              margin: const EdgeInsets.fromLTRB(2, 4, 2, 0),
+            ),
+            Expanded(
+                flex: 4,
+                child: ListView(
                   children: [
-                    Expanded(
-                      flex: 5,
-                      child:
-                          deviceTag ? VideoPhoneWidget() : VideoWindowWidget(),
+                    Container(
+                      height: 4,
+                      color: Colors.black87,
                     ),
-                    Expanded(
-                      flex: 6,
-                      child: LineCharts(listData: listData),
+                    const BaseHeard(
+                      title: "功能按键",
                     ),
+                    const SizedBox(
+                      height: 1,
+                    ),
+                    BaseFunctionButton(
+                      selectBack: selectBackData,
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    const BaseHeard(
+                      title: "设备参数",
+                    ),
+                    const SizedBox(
+                      height: 1,
+                    ),
+                    const BaseDevicesParme(
+                        title: "电池电压",
+                        data: "10V",
+                        title1: "电池电压",
+                        data1: "10V"),
+                    const BaseDevicesParme(
+                        title: "电池电压",
+                        data: "10V",
+                        title1: "电池电压",
+                        data1: "10V"),
+                    const BaseDevicesParme(
+                        title: "电池电压",
+                        data: "10V",
+                        title1: "电池电压",
+                        data1: "10V"),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    const BaseHeard(
+                      title: "方向控制",
+                    ),
+                    BaseDirection(),
                   ],
-                ),
-              )),
-          Container(
-            // color: Colors.yellow[800],
-            width: 1,
-            margin: const EdgeInsets.fromLTRB(2, 4, 2, 0),
-          ),
-          Expanded(
-              flex: 4,
-              child: ListView(
-                children: [
-                  Container(
-                    height: 4,
-                    color: Colors.black87,
-                  ),
-                  const BaseHeard(
-                    title: "功能按键",
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  BaseFunctionButton(
-                    selectBack: selectBackData,
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  const BaseHeard(
-                    title: "设备参数",
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  const BaseDevicesParme(
-                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
-                  const BaseDevicesParme(
-                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
-                  const BaseDevicesParme(
-                      title: "电池电压", data: "10V", title1: "电池电压", data1: "10V"),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  const BaseHeard(
-                    title: "方向控制",
-                  ),
-                  BaseDirection(),
-                ],
-              )),
-        ],
+                )),
+          ],
+        ),
       ),
     );
   }

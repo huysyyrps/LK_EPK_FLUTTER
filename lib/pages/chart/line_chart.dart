@@ -1,15 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lk_epk/model/switchtag_context.dart';
 import 'package:lk_epk/utils/base_button.dart';
 import 'package:lk_epk/utils/base_text.dart';
 
 class LineCharts extends StatefulWidget {
   final List<FlSpot> listData;
+  final bool switchTag;
 
-  const LineCharts({super.key, required this.listData});
-
-  // const LineCharts({super.key, required this.listData});
+  const LineCharts(
+      {super.key, required this.listData, required this.switchTag});
 
   @override
   State<LineCharts> createState() => _LineChartsState();
@@ -27,6 +27,8 @@ class _LineChartsState extends State<LineCharts> {
   double rangeAddNum = 80;
   @override
   Widget build(BuildContext context) {
+    final switchTagContext = SwitchTagContext.of(context);
+    final switchTagModel = switchTagContext?.switchTagModel;
     return SizedBox(
       child: Stack(
         alignment: Alignment.center, //指定未定位或部分定位widget的对齐方式
@@ -112,7 +114,7 @@ class _LineChartsState extends State<LineCharts> {
             child: Row(
               children: [
                 Visibility(
-                    visible: false,
+                    visible: widget.switchTag,
                     child: Row(
                       children: [
                         Container(
