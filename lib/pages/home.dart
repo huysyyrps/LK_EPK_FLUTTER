@@ -3,19 +3,13 @@ import 'dart:io';
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:lk_epk/file/path_provider.dart';
 import 'package:lk_epk/model/bool_notification.dart';
-import 'package:lk_epk/model/switchtag_context.dart';
-import 'package:lk_epk/model/switchtag_model.dart';
 import 'package:lk_epk/pages/chart/line_chart.dart';
 import 'package:lk_epk/pages/webview/phone_webview.dart';
 import 'package:lk_epk/pages/webview/window_webview.dart';
 import 'package:lk_epk/utils/base_devices_parame.dart';
-import 'package:lk_epk/utils/base_direction.dart';
 import 'package:lk_epk/utils/base_function_button.dart';
 import 'package:lk_epk/utils/base_heard.dart';
-import 'package:lk_epk/utils/base_option.dart';
-import 'package:lk_epk/utils/test_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,24 +23,12 @@ bool deviceTag = Platform.isAndroid ? true : false;
 class _HomePageState extends State<HomePage> {
   //switch状态
   bool switchTag = false;
-  late SwitchTagModel switchTagModel;
-  _initData() {
-    switchTagModel = SwitchTagModel(switchTag);
-  }
 
   @override
   void initState() {
     super.initState();
     //模拟数据
     setTestData();
-    _initData();
-  }
-
-  //点击监听
-  _switchclient() {
-    setState(() {
-      switchTagModel = SwitchTagModel(true);
-    });
   }
 
   List<FlSpot> listData = [];
@@ -182,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                     const BaseHeard(
                       title: "方向控制",
                     ),
-                    BaseDirection(),
+                    // BaseDirection(),
                   ],
                 )),
           ],
