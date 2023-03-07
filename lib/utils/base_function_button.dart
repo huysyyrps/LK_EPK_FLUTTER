@@ -35,6 +35,7 @@ class _BaseFunctionButtonState extends State<BaseFunctionButton> {
               Expanded(
                 flex: 1,
                 child: Container(
+                  height: 55,
                   padding: const EdgeInsets.all(0),
                   color: Colors.black87,
                   child: Column(

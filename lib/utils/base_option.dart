@@ -16,6 +16,7 @@ class BaseOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
       padding: const EdgeInsets.all(0),
+      height: 55,
       color: Colors.black87, //使用Ink包裹，在这里设置颜色
       child: InkWell(
         splashColor: Colors.red,
