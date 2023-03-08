@@ -8,6 +8,7 @@ import 'package:lk_epk/pages/chart/line_chart.dart';
 import 'package:lk_epk/pages/webview/phone_webview.dart';
 import 'package:lk_epk/pages/webview/window_webview.dart';
 import 'package:lk_epk/utils/base_devices_parame.dart';
+import 'package:lk_epk/utils/base_direction.dart';
 import 'package:lk_epk/utils/base_function_button.dart';
 import 'package:lk_epk/utils/base_heard.dart';
 
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
                 flex: 4,
-                child: ListView(
+                child: Column(
                   children: [
                     Container(
                       height: 4,
@@ -135,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                       selectBack: selectBackData,
                     ),
                     const SizedBox(
-                      height: 4,
+                      height: 2,
                     ),
                     const BaseHeard(
                       title: "设备参数",
@@ -159,12 +160,15 @@ class _HomePageState extends State<HomePage> {
                         title1: "电池电压",
                         data1: "10V"),
                     const SizedBox(
-                      height: 4,
+                      height: 2,
                     ),
                     const BaseHeard(
                       title: "方向控制",
                     ),
-                    // BaseDirection(),
+                    Expanded(
+                      flex: 1,
+                      child: BaseDirection(),
+                    )
                   ],
                 )),
           ],

@@ -30,6 +30,7 @@ class _BaseDevicesParmeState extends State<BaseDevicesParme> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 49,
       width: MediaQuery.of(context).size.width / 12 * 4,
       child: Column(
         children: [
