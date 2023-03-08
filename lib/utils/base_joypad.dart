@@ -23,7 +23,7 @@ class JoypadState extends State<Joypad> {
   }
 
   void calculateDelta(Offset offset) {
-    Offset newDelta = offset - Offset(75, 75);
+    Offset newDelta = offset - const Offset(75, 75);
     updateDelta(
       Offset.fromDirection(
         newDelta.direction,
@@ -41,9 +41,12 @@ class JoypadState extends State<Joypad> {
           borderRadius: BorderRadius.circular(75),
         ),
         child: GestureDetector(
+          onPanDown: onDragDown,
+          onPanUpdate: onDragUpdate,
+          onPanEnd: onDragEnd,
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0x55ffffff),
+              color: Colors.yellow[800],
               borderRadius: BorderRadius.circular(75),
             ),
             child: Center(
@@ -62,9 +65,6 @@ class JoypadState extends State<Joypad> {
               ),
             ),
           ),
-          onPanDown: onDragDown,
-          onPanUpdate: onDragUpdate,
-          onPanEnd: onDragEnd,
         ),
       ),
     );
