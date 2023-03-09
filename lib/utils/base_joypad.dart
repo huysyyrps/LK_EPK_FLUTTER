@@ -25,6 +25,9 @@ class JoypadState extends State<Joypad> {
   void calculateDelta(Offset offset) {
     Offset newDelta = offset - const Offset(75, 75);
     updateDelta(
+      //为了移动Fly实例，需要使用fromDirection构造函数创建一个新的偏移（Offset），
+      //该构造函数采用方向和可选距离，对于方向，只需要提供toTarget的方向属性，
+      //对于距离，距离默认为1，我们输入已经计算好的stepDistance值。
       Offset.fromDirection(
         newDelta.direction,
         min(45, newDelta.distance),

@@ -60,27 +60,6 @@ class _BaseDevicesParmeState extends State<BaseDevicesParme> {
           )
         ],
       ),
-      // child: Column(
-      //   children: [
-      //     Container(
-      //       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-      //       alignment: Alignment.centerLeft,
-      //       child: Text(
-      //         widget.title,
-      //         style: const TextStyle(fontSize: 12, color: Colors.white),
-      //       ),
-      //     ),
-      //     Container(
-      //       height: 30,
-      //       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      //       alignment: Alignment.centerLeft,
-      //       decoration: BoxDecoration(
-      //           color: Colors.yellow[800],
-      //           borderRadius: const BorderRadius.all(Radius.circular(2))),
-      //       child: Text(widget.data),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
